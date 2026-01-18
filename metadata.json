@@ -1,0 +1,5 @@
+{
+  "name": "SillyTavern CosyVoice Extension Generator",
+  "description": "A tool to generate manifest.json and index.js files for a SillyTavern CosyVoice TTS extension, including GitHub hosting instructions.",
+  "requestFramePermissions": []
+}
