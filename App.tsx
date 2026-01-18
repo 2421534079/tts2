@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ExtensionConfig, GeneratedFile } from './types';
-import { generateManifest, generateIndexJs, generateReadme } from './services/templates';
+import { generateManifest, generateIndexJs, generateReadme, generateStyleCss } from './services/templates';
 import { ConfigForm } from './components/ConfigForm';
 import { CodePreview } from './components/CodePreview';
 import { Instructions } from './components/Instructions';
@@ -33,6 +33,11 @@ const App: React.FC = () => {
       name: 'index.js',
       content: generateIndexJs(config),
       language: 'javascript'
+    },
+    {
+      name: 'style.css',
+      content: generateStyleCss(config),
+      language: 'css'
     },
     {
       name: 'README.md',

@@ -9,10 +9,295 @@ export const generateManifest = (config: ExtensionConfig): string => {
       description: config.description,
       loading_order: 100,
       requires: [],
+      js: "index.js",
+      css: "style.css"
     },
     null,
     2
   );
+};
+
+export const generateStyleCss = (config: ExtensionConfig): string => {
+  return `
+/* Floating Ball */
+.cosyvoice-float-ball {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+    font-size: 24px;
+    user-select: none;
+}
+
+.cosyvoice-float-ball:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+.cosyvoice-float-ball:active {
+    transform: scale(0.95);
+}
+
+/* Settings Panel */
+.cosyvoice-panel {
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+    width: 320px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 0;
+    z-index: 19999;
+    color: #e2e8f0;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    display: none;
+    flex-direction: column;
+    animation: cosySlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cosyvoice-panel.visible {
+    display: flex;
+}
+
+@keyframes cosySlideIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+/* Panel Header */
+.cosyvoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cosyvoice-title {
+    font-weight: 700;
+    font-size: 1.1em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cosyvoice-close {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    font-size: 1.2em;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.cosyvoice-close:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Panel Body */
+.cosyvoice-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Form Elements */
+.cosyvoice-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cosyvoice-field label {
+    font-size: 0.85em;
+    color: #94a3b8;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cosyvoice-input, 
+.cosyvoice-select {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: white;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cosyvoice-input:focus, 
+.cosyvoice-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.cosyvoice-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Buttons */
+.cosyvoice-btn {
+    background: linear-gradient(to right, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: filter 0.2s, transform 0.1s;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.cosyvoice-btn:hover {
+    filter: brightness(1.1);
+}
+
+.cosyvoice-btn:active {
+    transform: translateY(1px);
+}
+
+.cosyvoice-btn.secondary {
+    background: #334155;
+}
+
+.cosyvoice-icon-btn {
+    padding: 10px;
+    aspect-ratio: 1;
+    background: #334155;
+}
+
+.cosyvoice-icon-btn:hover {
+    background: #475569;
+}
+
+/* Toggle Switch */
+.cosyvoice-toggle-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.cosyvoice-toggle-label {
+    font-size: 0.9em;
+    color: #e2e8f0;
+}
+
+.cosyvoice-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.cosyvoice-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cosyvoice-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #334155;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.cosyvoice-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .cosyvoice-slider {
+    background-color: #3b82f6;
+}
+
+input:checked + .cosyvoice-slider:before {
+    transform: translateX(20px);
+}
+
+/* Range Slider */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    margin-top: -6px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #334155;
+    border-radius: 2px;
+}
+`;
 };
 
 export const generateIndexJs = (config: ExtensionConfig): string => {
@@ -32,7 +317,7 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
         instruction: "${config.defaultInstruction}",
         speed: 1.0,
         enabled: true,
-        autoMatchCharacter: true // Try to use ST character name as speaker name
+        autoMatchCharacter: true 
     };
 
     let settings = defaultSettings;
@@ -48,7 +333,6 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
         if (!extensions[extensionId]) {
             extensions[extensionId] = {};
         }
-        // Merge defaults with saved settings
         settings = { ...defaultSettings, ...(extensions[extensionId].settings || {}) };
     }
 
@@ -62,19 +346,23 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
     async function fetchSpeakers() {
         const url = \`\${settings.apiUrl}/speakers\`;
         try {
+            const btnIcon = $('#cosy_refresh_icon');
+            btnIcon.addClass('fa-spin');
+            
             const response = await fetch(url);
             if (response.ok) {
                 const data = await response.json();
-                // Expecting [{name: "...", voice_id: "..."}, ...]
                 availableSpeakers = data.map(s => s.name);
-                toastr.success(\`Loaded \${availableSpeakers.length} speakers from CosyVoice\`);
+                toastr.success(\`Loaded \${availableSpeakers.length} speakers\`);
                 updateSpeakerDropdown();
             } else {
                 toastr.error("Failed to load speakers list");
             }
+            btnIcon.removeClass('fa-spin');
         } catch (e) {
             console.error(e);
             toastr.error("Could not connect to CosyVoice API");
+            $('#cosy_refresh_icon').removeClass('fa-spin');
         }
     }
 
@@ -85,7 +373,6 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
         select.empty();
         select.append('<option value="" disabled selected>Select a speaker...</option>');
         
-        // Add manual entry option if current setting is not in list
         if (settings.speaker && !availableSpeakers.includes(settings.speaker)) {
              select.append(\`<option value="\${settings.speaker}">\${settings.speaker} (Custom)</option>\`);
         }
@@ -95,70 +382,119 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
             select.append(\`<option value="\${spk}" \${isSelected}>\${spk}</option>\`);
         });
 
-        // Update text input when dropdown changes
         select.off('change').on('change', function() {
             const val = $(this).val();
             $('#cosy_speaker').val(val);
             settings.speaker = val;
+            saveSettings();
         });
     }
 
-    // Settings Menu UI
-    function addSettings() {
-        const html = \`
-        <div class="cosyvoice-settings">
-            <div class="inline-drawer">
-                <div class="inline-drawer-toggle inline-drawer-header">
-                    <b>CosyVoice TTS Settings</b>
-                    <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+    // UI Construction
+    function createUI() {
+        // Remove existing elements if any
+        $('.cosyvoice-float-ball').remove();
+        $('.cosyvoice-panel').remove();
+
+        // 1. Floating Ball
+        const ball = $(\`
+            <div class="cosyvoice-float-ball" title="CosyVoice Settings">
+                <i class="fa-solid fa-microphone-lines"></i>
+            </div>
+        \`);
+
+        // 2. Settings Panel
+        const panel = $(\`
+            <div class="cosyvoice-panel">
+                <div class="cosyvoice-header">
+                    <div class="cosyvoice-title">
+                        <i class="fa-solid fa-music text-primary"></i> CosyVoice TTS
+                    </div>
+                    <div class="cosyvoice-close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
                 </div>
-                <div class="inline-drawer-content">
-                    <label class="checkbox_label">
-                        <input type="checkbox" id="cosy_enabled" \${settings.enabled ? 'checked' : ''} />
-                        Enable TTS
-                    </label>
-
-                    <label class="checkbox_label" title="If checked, tries to use the SillyTavern character name as the CosyVoice speaker name.">
-                        <input type="checkbox" id="cosy_auto_match" \${settings.autoMatchCharacter ? 'checked' : ''} />
-                        Auto-match Character Name
-                    </label>
-                    
-                    <hr />
-
-                    <label>API URL</label>
-                    <input type="text" id="cosy_api_url" class="text_pole" value="\${settings.apiUrl}" placeholder="http://127.0.0.1:9880" />
-                    
-                    <label>Default Speaker</label>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="text" id="cosy_speaker" class="text_pole" value="\${settings.speaker}" placeholder="Speaker Name in Config" style="flex: 1;" />
-                        <button id="cosy_refresh_speakers" class="menu_button" title="Fetch speakers from API"><i class="fa-solid fa-sync"></i></button>
+                
+                <div class="cosyvoice-body">
+                    <!-- Enable Switch -->
+                    <div class="cosyvoice-toggle-wrapper">
+                        <span class="cosyvoice-toggle-label">Enable TTS</span>
+                        <label class="cosyvoice-switch">
+                            <input type="checkbox" id="cosy_enabled" \${settings.enabled ? 'checked' : ''}>
+                            <span class="cosyvoice-slider"></span>
+                        </label>
                     </div>
-                    <select id="cosy_speaker_select" class="text_pole" style="margin-top: 5px;"></select>
 
-                    <label>Instruction (Instruct Text)</label>
-                    <input type="text" id="cosy_instruction" class="text_pole" value="\${settings.instruction || ''}" placeholder="e.g. 用生气的语气" />
-
-                    <label>Speed: <span id="cosy_speed_val">\${settings.speed}</span></label>
-                    <input type="range" id="cosy_speed" min="0.5" max="2.0" step="0.1" value="\${settings.speed}" />
-                    
-                    <div style="margin-top: 10px; text-align: right;">
-                        <button id="cosy_save" class="menu_button">Save Settings</button>
+                    <!-- Auto Match Switch -->
+                    <div class="cosyvoice-toggle-wrapper">
+                        <span class="cosyvoice-toggle-label" title="Match ST Character to CosyVoice Speaker">Auto-Match Character</span>
+                        <label class="cosyvoice-switch">
+                            <input type="checkbox" id="cosy_auto_match" \${settings.autoMatchCharacter ? 'checked' : ''}>
+                            <span class="cosyvoice-slider"></span>
+                        </label>
                     </div>
+
+                    <hr style="border-color: rgba(255,255,255,0.1); width: 100%; margin: 0;">
+
+                    <!-- API URL -->
+                    <div class="cosyvoice-field">
+                        <label>API URL</label>
+                        <input type="text" id="cosy_api_url" class="cosyvoice-input" value="\${settings.apiUrl}" placeholder="http://127.0.0.1:9880">
+                    </div>
+
+                    <!-- Speaker Selection -->
+                    <div class="cosyvoice-field">
+                        <label>Speaker / Voice ID</label>
+                        <div class="cosyvoice-row">
+                            <input type="text" id="cosy_speaker" class="cosyvoice-input" value="\${settings.speaker}" placeholder="Default Speaker">
+                            <button id="cosy_refresh_speakers" class="cosyvoice-btn secondary cosyvoice-icon-btn" title="Refresh List">
+                                <i id="cosy_refresh_icon" class="fa-solid fa-sync"></i>
+                            </button>
+                        </div>
+                        <select id="cosy_speaker_select" class="cosyvoice-select"></select>
+                    </div>
+
+                    <!-- Instruction -->
+                    <div class="cosyvoice-field">
+                        <label>Instruction <span style="font-weight:normal; opacity:0.7;">(Emotion/Tone)</span></label>
+                        <input type="text" id="cosy_instruction" class="cosyvoice-input" value="\${settings.instruction || ''}" placeholder="e.g. Happy, Sad, Angry">
+                    </div>
+
+                    <!-- Speed -->
+                    <div class="cosyvoice-field">
+                        <label>Speed: <span id="cosy_speed_val" style="color:#3b82f6">\${settings.speed}</span></label>
+                        <input type="range" id="cosy_speed" min="0.5" max="2.0" step="0.1" value="\${settings.speed}">
+                    </div>
+
+                    <!-- Save Button -->
+                    <button id="cosy_save" class="cosyvoice-btn">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Settings
+                    </button>
                 </div>
             </div>
-        </div>
-        \`;
-        
-        // Inject into extensions menu
-        $('#extensions_settings').append(html);
+        \`);
 
-        // Populate initial dropdown if we have cached speakers, or just layout
-        updateSpeakerDropdown();
+        $('body').append(ball).append(panel);
 
-        // Event Listeners
-        $('#cosy_refresh_speakers').click((e) => {
-            e.preventDefault();
-            settings.apiUrl = $('#cosy_api_url').val(); // update URL before fetch
+        // Events
+        ball.on('click', () => {
+            panel.toggleClass('visible');
+        });
+
+        panel.find('.cosyvoice-close').on('click', () => {
+            panel.removeClass('visible');
+        });
+
+        // Close panel when clicking outside
+        $(document).on('click', (e) => {
+            if (!$(e.target).closest('.cosyvoice-panel, .cosyvoice-float-ball').length) {
+                panel.removeClass('visible');
+            }
+        });
+
+        // Input Bindings
+        $('#cosy_refresh_speakers').click(() => {
+            settings.apiUrl = $('#cosy_api_url').val();
             fetchSpeakers();
         });
 
@@ -174,8 +510,11 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
             settings.instruction = $('#cosy_instruction').val();
             settings.speed = Number($('#cosy_speed').val());
             saveSettings();
-            toastr.success('CosyVoice settings saved!');
+            toastr.success('Settings Saved', extensionName);
         });
+
+        // Initial Load
+        updateSpeakerDropdown();
     }
 
     // TTS Logic
@@ -184,34 +523,25 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
         if (!text) return;
 
         try {
-            // Determine which speaker to use
             let targetSpeaker = settings.speaker;
             
-            // If Auto-match is on, and we have a character name
             if (settings.autoMatchCharacter && characterName) {
-                // If we have a speaker list, check if it exists
                 if (availableSpeakers.length > 0) {
                     if (availableSpeakers.includes(characterName)) {
                         targetSpeaker = characterName;
-                        log(\`Auto-matched speaker: \${characterName}\`);
-                    } else {
-                        log(\`Character "\${characterName}" not found in speaker list, using default: \${targetSpeaker}\`);
+                        log(\`Auto-matched: \${characterName}\`);
                     }
                 } else {
-                    // No list loaded? Just try sending the name. 
-                    // The API will error if it doesn't exist, but that might be desired behavior for some.
-                    // For safety, let's just try using the name, assuming the user knows their config matches ST names.
+                    // Try blindly if list not loaded
                     targetSpeaker = characterName;
                 }
             }
 
             if (!targetSpeaker) {
-                toastr.warning('No speaker configured for CosyVoice', extensionName);
-                return;
+                return; // Silent fail if no speaker
             }
 
-            // Using the tavern-compatible endpoint from the Python script
-            const endpoint = \`\${settings.apiUrl}\`; // The root endpoint '/' is tts_tavern
+            const endpoint = \`\${settings.apiUrl}\`; 
             
             const payload = {
                 text: text,
@@ -220,21 +550,19 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
                 instruct_text: settings.instruction || undefined
             };
             
+            // Show toast
+            toastr.info(\`Generating audio for \${characterName}...\`, extensionName);
+
             const response = await fetch(endpoint, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            if (!response.ok) {
-                const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.error || 'API Request Failed');
-            }
+            if (!response.ok) throw new Error('API Error');
 
             const audioBlob = await response.blob();
-            if (audioBlob.size === 0) throw new Error('Received empty audio');
+            if (audioBlob.size === 0) throw new Error('Empty Audio');
 
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
@@ -242,19 +570,16 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
 
         } catch (error) {
             console.error(error);
-            toastr.error('TTS Error: ' + error.message, extensionName);
+            toastr.error('TTS Failed', extensionName);
         }
     }
 
-    // Hook into SillyTavern's message received event
     const onMessageReceived = async (data) => {
         if (!settings.enabled) return;
         
-        // Only speak if it's the character (not user)
         if (!data.isUser) { 
-            // Strip code blocks, asterisks (actions), and extra spaces
-            let cleanText = data.mes.replace(/\\*.*?\\*/g, ''); // remove actions
-            cleanText = cleanText.replace(/\`\`\`[\\s\\S]*?\`\`\`/g, ''); // remove code blocks
+            let cleanText = data.mes.replace(/\\*.*?\\*/g, '');
+            cleanText = cleanText.replace(/\`\`\`[\\s\\S]*?\`\`\`/g, '');
             cleanText = cleanText.trim();
             
             if(cleanText.length > 0) {
@@ -263,19 +588,25 @@ export const generateIndexJs = (config: ExtensionConfig): string => {
         }
     };
 
-    // Register Extension
+    // Initialization
     jQuery(async () => {
         await loadSettings();
-        addSettings();
+        createUI();
         
-        // Listen for new messages
+        // Try to fetch speakers silently on load
+        if(settings.apiUrl) {
+             const url = \`\${settings.apiUrl}/speakers\`;
+             fetch(url).then(r => r.json()).then(data => {
+                 availableSpeakers = data.map(s => s.name);
+                 updateSpeakerDropdown();
+             }).catch(() => {});
+        }
+
         if (typeof eventSource !== 'undefined') {
              eventSource.on(event_types.MESSAGE_RECEIVED, onMessageReceived);
-        } else {
-            console.warn("[CosyVoice] eventSource not found. Is SillyTavern loaded?");
         }
         
-        log("Extension Loaded. API: " + settings.apiUrl);
+        log("Extension Loaded");
     });
 
 })();
@@ -287,40 +618,25 @@ export const generateReadme = (config: ExtensionConfig): string => {
 
 ${config.description}
 
-## 功能 (Features)
+## Author
+${config.author}
 
-*   **TTS Integration**: Connects SillyTavern to a locally running CosyVoice API.
-*   **Auto-Match**: Can automatically use the SillyTavern character name as the CosyVoice speaker ID.
-*   **Instruction Control**: Supports setting global prompt instructions (e.g. "Use a happy tone").
-*   **Speed Control**: Adjustable playback speed.
+## Version
+${config.version}
 
-## 安装 (Installation)
+## Configuration
+This extension connects SillyTavern to a CosyVoice API.
 
-1. Open **SillyTavern**.
-2. Navigate to **Extensions** -> **Install Extension**.
-3. Paste the GitHub URL of this repository:
-   \`https://github.com/${config.author || 'yourusername'}/${config.name.toLowerCase().replace(/\s+/g, '-')}\`
-4. Click **Install**.
-5. Reload SillyTavern.
+**Default API URL:** \`${config.apiUrl}\`
 
-## 配置 (Configuration)
+## Installation
+1. Install via SillyTavern Extensions menu using this repository URL.
+2. Ensure your CosyVoice API is running.
+3. Reload SillyTavern.
 
-1. Go to the **Extensions** menu (Puzzle icon).
-2. Expand **CosyVoice TTS Settings**.
-3. **API URL**: Set to your CosyVoice API address (Default from your python script: \`${config.apiUrl}\`).
-   *   *Note: Ensure your Python server is running (\`python api.py\`)*.
-4. **Speaker**: 
-   *   Click the **Refresh** icon to load speakers from \`config/角色.json\`.
-   *   Select a default speaker.
-5. **Auto-match**: If enabled, the extension will try to find a speaker in CosyVoice that matches the name of the character currently chatting.
-
-## 服务端要求 (Server Requirements)
-
-This extension requires the \`api.py\` script provided in your CosyVoice setup.
-Ensure the server is running on port 9880 (or your custom port).
-
-\`\`\`bash
-python api.py --port 9880
-\`\`\`
+## Usage
+- Open the CosyVoice settings panel (floating button).
+- Select a speaker or enable "Auto-Match Character".
+- Chat!
 `;
 };
