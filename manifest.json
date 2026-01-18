@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "display_name": "tts",
+  "version": "1.0",
+  "author": "",
+  "description": "123测试。",
+  "minSillyTavernVersion": "1.14.0",
+  "requires": [],
+  "loading_order": 120,
+
+  ]
+}
+
